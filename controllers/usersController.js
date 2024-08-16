@@ -80,5 +80,15 @@ module.exports = {
     userDelete: (req, res) => {
         usersStorage.deleteUser(req.params.id);
         res.redirect('/');
+    },
+    userSearchGet: (req, res) => {
+        const results = usersStorage.getUsers().filter((user) => {
+            return user.firstName.includes(req.query.search) || user.lastName.includes(req.query.search);
+        })
+
+        res.render('search', {
+            title: `search results for: ${req.query.search}`,
+            results: results,
+        })
     }
 }
